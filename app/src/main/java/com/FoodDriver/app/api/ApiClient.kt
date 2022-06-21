@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 
 object ApiClient {
 
-    val BASE_URL="http://192.168.1.14:81/food-admin/api/"
+    val BASE_URL="http://www.fastfood171.site/api/"
 
     var TIMEOUT: Long = 60 * 1 * 1.toLong()
     val getClient: ApiInterface get() {

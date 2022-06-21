@@ -168,7 +168,7 @@ class DashboardActivity: BaseActivity() {
                 Common.dismissLoadingProgress()
                 Common.alertErrorOrValidationDialog(
                     this@DashboardActivity,
-                    resources.getString(R.string.error_msg)
+                    t.message.toString()
                 )
             }
         })

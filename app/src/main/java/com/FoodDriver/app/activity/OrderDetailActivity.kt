@@ -99,7 +99,7 @@ class OrderDetailActivity:BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun setFoodDetailData(response: RestOrderDetailResponse) {
-        tvPincode.text=response.getPincode()
+
         if(response.getData().size>0){
             setFoodCategoryAdaptor(response.getData())
         }
@@ -124,41 +124,41 @@ class OrderDetailActivity:BaseActivity() {
         }else {
             rlDiscount.visibility = View.VISIBLE
             tvOrderTotalPrice.text =
-                getStringPref(this@OrderDetailActivity, isCurrancy) + String.format(
+                  String.format(
                     Locale.US,
                     "%.02f",
                     response.getSummery()!!.getOrder_total()!!.toDouble()
-                )
+                )+getStringPref(this@OrderDetailActivity, isCurrancy)
             tvOrderTaxPrice.text =
-                getStringPref(this@OrderDetailActivity, isCurrancy) + String.format(
+                String.format(
                     Locale.US,
                     "%.02f",
                     response.getSummery()!!.getTax()!!.toDouble()
-                )
+                )+ getStringPref(this@OrderDetailActivity, isCurrancy)
             tvOrderDeliveryCharge.text =
-                getStringPref(this@OrderDetailActivity, isCurrancy) + String.format(
+                String.format(
                     Locale.US,
                     "%.02f",
                     response.getSummery()!!.getDelivery_charge()!!.toDouble()
-                )
+                )+ getStringPref(this@OrderDetailActivity, isCurrancy)
 
             val getTex: Float =
                 (response.getSummery()!!.getOrder_total()!!.toFloat() * response.getSummery()!!
                     .getTax()!!.toFloat()) / 100
             tvTitleTex.text = "Tax (${response.getSummery()!!.getTax()}%)"
             tvOrderTaxPrice.text =
-                getStringPref(this@OrderDetailActivity, isCurrancy) + String.format(
+                 String.format(
                     Locale.US,
                     "%.02f",
                     getTex
-                )
+                ) + getStringPref(this@OrderDetailActivity, isCurrancy)
 
             tvDiscountOffer.text =
-                " - " + getStringPref(this@OrderDetailActivity, isCurrancy) + String.format(
+                " - "  +String.format(
                     Locale.US,
                     "%.02f",
                     response.getSummery()!!.getDiscount_amount()!!.toFloat()
-                )
+                )+ getStringPref(this@OrderDetailActivity, isCurrancy)
             tvPromocode.text= response.getSummery()!!.getPromocode()
 
             val subtotal =
@@ -167,16 +167,15 @@ class OrderDetailActivity:BaseActivity() {
             val totalprice =
                 subtotal + getTex + response.getSummery()!!.getDelivery_charge()!!.toFloat()
             tvOrderTotalCharge.text =
-                getStringPref(this@OrderDetailActivity, isCurrancy) + String.format(
+                 String.format(
                     Locale.US, "%.02f", totalprice
-                )
+                ) + getStringPref(this@OrderDetailActivity, isCurrancy)
         }
 
         Glide.with(this@OrderDetailActivity).load(response.getProfile_image()).placeholder(ResourcesCompat.getDrawable(resources,R.drawable.ic_placeholder,null)).into(ivUserDetail!!)
         tvUserAddress.text=response.getDelivery_address()
         tvUserName.text=response.getName()
-        tvUserLandMark.text=response.getLandmark()
-        tvUserBuilding.text=response.getBuilding()
+
         llCall.setOnClickListener {
             if(response.getMobile()!=null){
                 val call: Uri = Uri.parse("tel:${response.getMobile()}")
@@ -190,6 +189,9 @@ class OrderDetailActivity:BaseActivity() {
                 val urlAddress = "http://maps.google.com/maps?q=" + response.getLat() + "," + response.getLang() + "(" + "FoodApp" + ")&iwloc=A&hl=es"
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlAddress))
                 startActivity(intent)
+                Common.getLog("apimap","here")
+            }else{
+                Common.getLog("apimap","not")
             }
         }
 
@@ -227,7 +229,7 @@ class OrderDetailActivity:BaseActivity() {
                 val tvNotes: TextView = holder.itemView.findViewById(R.id.tvNotes)
 
                 tvOrderFoodName.text =orderHistoryList.get(position).getItem_name()
-                tvPrice.text = getStringPref(this@OrderDetailActivity,isCurrancy)+String.format(Locale.US,"%.2f",orderHistoryList.get(position).getTotal_price()!!.toDouble())
+                tvPrice.text = String.format(Locale.US,"%.2f",orderHistoryList.get(position).getTotal_price()!!.toDouble())+getStringPref(this@OrderDetailActivity,isCurrancy)
                 tvQtyNumber.text ="QTY : ${orderHistoryList.get(position).getQty()}"
                 if(orderHistoryList.get(position).getAddons().size>0){
                     tvAddons.backgroundTintList= ColorStateList.valueOf(ResourcesCompat.getColor(resources,R.color.colorPrimary,null))

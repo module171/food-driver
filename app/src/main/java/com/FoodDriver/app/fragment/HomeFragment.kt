@@ -82,7 +82,7 @@ class HomeFragment : BaseFragmnet() {
                             rvOutGoingOrder.visibility = View.GONE
                             tvNoDataFound.visibility = View.VISIBLE
                         }
-                        SharePreference.setStringPref(activity!!,isCurrancy,restResponce.getCurrency()!!)
+//                        SharePreference.setStringPref(activity!!,isCurrancy,restResponce.getCurrency()!!)
                         tv_CountOrderComplate.text=restResponce.getCompleted_order()
                         tv_CountOrderOutgoing.text=restResponce.getOngoing_order()
 
@@ -152,7 +152,7 @@ class HomeFragment : BaseFragmnet() {
                     if(orderHistoryList.get(position).getPayment_type()!!.toInt()==0){
                         tvPaymentType.text = "Pay by Cash"
                     }else if(orderHistoryList.get(position).getPayment_type()!!.toInt()==1){
-                        tvPaymentType.text = "Razorpay"
+                        tvPaymentType.text = "VnPay"
                     }else if(orderHistoryList.get(position).getPayment_type()!!.toInt()==2){
                         tvPaymentType.text = "Stripe"
                     }
